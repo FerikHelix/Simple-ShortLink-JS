@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple urlShortener</title>
+</head>
+<body>
+    <h1>Simple urlShortener in HTML</h1>
+    <p>How this works is by simulating an database by using js localstorage and when user request we give the shortened link</p>
+
+    <p>
+        Link website : <input type="text" id="inputLink">
+    </p>
+    <button onclick="urlShortener()">Generate Link !!!!</button>
+    <p>Generated link : <span id="generatedLink"></span></p>
+    
+    <br><br><br>
+
+    <p>Localstorage database :</p>
+
+    <script>
+        function makeLink() {
+            // membuat link dengan cara memasukan random array accesor number dari variabel seed ke strArr
+            let generatedLink = "ferik.xyz/";
+            let seed = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            let strArr = [];
+            for (let x = 0; x <= 4; ++x) {
+                strArr.push(seed[Math.floor(Math.random() * 26)]);
+            }
+            strArr = strArr.toString().replaceAll(",", "");
+            return generatedLink.concat(strArr);
+            
+        }
+        function urlShortener() {
+            // get inputDOM
+            let inputDOM = document.getElementById("inputLink");
+            let inputLink = inputDOM.value;
+
+            // generate random link dengann makeLink()
+            let generatedLink = makeLink();
+            localStorage.setItem(inputLink, generatedLink);
+
+            let generatedLinkDOM = document.getElementById("generatedLink");
+            generatedLinkDOM.textContent = generatedLink;
+
+            // handle localstorage view
+            let storageDOM = document.createElement("p");
+            storageDOM.innerText = `Key : ${inputLink} \t\t Value :${localStorage.getItem(inputLink)}`;
+            document.body.appendChild(storageDOM);
+        }
+    </script>
+</body>
+</html>
